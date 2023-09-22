@@ -1,0 +1,61 @@
+/* Alex and his array (100 Marks)
+Meet Alex, a bright student who is dealing with an array challenge today. He has been given an array a1, a2, ..., aN of length N. The intriguing aspect of this challenge is that Alex can perform various operations on the array elements.
+
+
+
+In a single operation, Alex is allowed to choose two indices l and r, where 1 ≤ l ≤ r ≤ n. He can then multiply all the elements in the subarray [al, al+1, ..., ar] by -1, effectively reversing their signs.
+
+
+
+Being pressed for time as he is running late for school, Alex is seeking your assistance in determining the maximum possible sum of numbers in the array. Additionally, he is eager to find out the minimum number of operations required to achieve this maximum sum.
+
+
+
+Input Format
+The first line contains an integer N, the length of the array.
+
+The second line contains N space-separated integers a1, a2, ..., an, the array elements.
+
+
+
+Constraints
+1 ≤ N ≤ 2 * 10^5
+
+-10^9 ≤ ai ≤ 10^9
+
+
+
+Output Format
+Print two space-separated integers: the maximum possible sum of integers in the array and the minimum number of operations required to achieve this sum.*/
+
+Solution:
+# Read input
+N = int(input())
+array = list(map(int, input().split()))
+
+# Initialize variables to keep track of the sum and the number of operations
+sum_array = 0
+num_operations = 0
+
+# Count the number of negative elements in the array
+num_negatives = sum(1 for a in array if a < 0)
+
+# If there are an even number of negative elements, we can make all of them positive
+if num_negatives % 2 == 0:
+    for a in array:
+        sum_array += abs(a)
+    num_operations = 0
+# If there are an odd number of negative elements, we need to make all but one negative
+else:
+    min_abs = float('inf')
+    for a in array:
+        sum_array += abs(a)
+        min_abs = min(min_abs, abs(a))
+    
+    num_operations = 1
+
+    # Subtract the minimum absolute value twice (once to make it positive, and once to make it negative)
+    sum_array -= 2 * min_abs
+
+# Print the result
+print(sum_array, num_operations)
